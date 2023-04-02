@@ -13,6 +13,8 @@ const controls = new Controls(document.addEventListener("keydown", () => {}));
 const player = GameObjectManager.createObject(
   "player",
   new Player(
+    {x:0,y:-1},
+    'player',
     4,
     20,
     CanvasConfigs.middleWidth,
@@ -46,7 +48,7 @@ const updatePlayer = () => {
   player.updateFireRate();
   player.move(controls.axis());
   player.checkBoundsX(0, CanvasConfigs.width);
-  player.checkBoundsY(CanvasConfigs.height - 150, CanvasConfigs.height);
+  player.checkBoundsY(CanvasConfigs.height - 250, CanvasConfigs.height);
   if (controls.key("confirm")) {
     player.shoot();
   }
@@ -70,6 +72,7 @@ const gameLoop = () => {
   if (GameConfigs.debugOptions.collisionVisable) {
     player.collisionBox.debugDraw(ctx);
     EnemyController.debugDrawEnemies(ctx);
+    ProjectileController.debugDrawProjectiles(ctx);
   }
 
   if (GameConfigs.debugOptions.firePointVisable) {

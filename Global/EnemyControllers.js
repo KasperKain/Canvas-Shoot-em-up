@@ -1,22 +1,33 @@
 import CanvasConfigs from "../Configs.js";
 import RandomLinePattern from "../Patterns/RandomLinePattern.js";
+import SideEntryPattern from "../Patterns/SideEntryPattern.js";
 import StraightLinePattern from "../Patterns/StraightLinePattern.js";
 import Enemy from "../Prefabs/Enemy.js";
+import Enemy2 from "../Prefabs/Enemy2.js";
+import Enemy3 from '../Prefabs/Enemy3.js'
 import GameObjectManager from "./GameObjectManager.js";
 
 export default class EnemyController {
+  static lastPatternIndex = 0;
   static screenSize = { x: CanvasConfigs.width, y: CanvasConfigs.height };
-  static patterns = [StraightLinePattern, RandomLinePattern];
-  static enemies = [{ type: "default", enemy: Enemy }];
+  static patterns = [StraightLinePattern,RandomLinePattern,SideEntryPattern];
+  static enemies = [{ type: "default", enemy: Enemy }, {type: 'crash', enemy: Enemy2},{type: 'side', enemy: Enemy3}];
   static spawnWave() {
     const newPattern = this.selectRandomPattern();
     newPattern.spawn();
   }
 
   static selectRandomPattern() {
-    return new this.patterns[Math.floor(Math.random() * this.patterns.length)](
+    while(true) {
+      let newPatternIndex = Math.floor(Math.random() * this.patterns.length);
+
+      if(newPatternIndex != this.lastPatternIndex){
+        this.lastPatternIndex = newPatternIndex
+    return new this.patterns[newPatternIndex](
       this.screenSize
     );
+      }
+    }
   }
 
   static updateEnemies() {
@@ -25,9 +36,13 @@ export default class EnemyController {
         this.spawnWave();
       }
       Object.values(GameObjectManager.objectPool.enemies).forEach((enemy) => {
-        enemy.move(enemy.moveAxis);
+        enemy.move(enemy.axis);
         enemy.moveFirePoint();
+        enemy.updateFireRate();
+        enemy.shoot();
         if (enemy.y > 600) GameObjectManager.deleteObject(enemy);
+        if(enemy.x < -300) GameObjectManager.deleteObject(enemy);
+        if(enemy.x > 900) GameObjectManager.deleteObject(enemy)
       });
     }
   }
@@ -55,11 +70,9 @@ export default class EnemyController {
     }
   }
   static debugDrawEnemiesFirePoint(ctx) {
-    console.log("called");
     if (GameObjectManager.objectPool.enemies) {
       Object.values(GameObjectManager.objectPool.enemies).forEach((enemy) => {
-        console.log("hit");
-        enemy.collisionBox.drawDebugFirePoint(ctx);
+        enemy.drawDebugFirePoint(ctx);
       });
     }
   }

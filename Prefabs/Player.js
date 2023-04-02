@@ -2,11 +2,12 @@ import ProjectileController from "../Global/ProjectileController.js";
 import GameObject from "./BaseObjects/GameObject.js";
 
 export default class Player extends GameObject {
-  constructor(l, d, x, y, w, h, v, hasCollision) {
-    super(l, d, x, y, w, h, v, hasCollision);
-    this.fireRate = 1;
-    this.firePoint = { x: this.x, y: this.y - 10 };
+  constructor(axis,t,l, d, x, y, w, h, v, hasCollision) {
+    super(axis,t,l, d, x, y, w, h, v, hasCollision);
+    this.fireRate = 2;
+    this.firePoint = { x: this.x, y: this.y};
     this.timeUntilNextFire = 0;
+    this.canFire = true;
   }
 
   checkBoundsX(min, max) {
@@ -21,7 +22,7 @@ export default class Player extends GameObject {
   moveFirePoint() {
     console.log();
     this.firePoint.x = this.x;
-    this.firePoint.y = this.y - 80;
+    this.firePoint.y = this.y - 20;
   }
 
   updateFireRate() {
@@ -34,10 +35,25 @@ export default class Player extends GameObject {
     ctx.fillRect(this.firePoint.x - 5, this.firePoint.y - 5, 10, 10);
   }
 
+  // override
+  hit(obj) {
+    if (this.lastCollided != obj) {
+      this.lastCollided = obj;
+      this.isHit = true;
+      this.l -= obj.d;
+      if (this.l <= 0) {
+        this.l = 0;
+        this.v = 0;
+        this.canFire = false;
+        console.log('game over')
+      }
+    }
+  }
+
   shoot() {
-    if (this.timeUntilNextFire <= 0) {
+    if (this.timeUntilNextFire <= 0 && this.canFire) {
       this.timeUntilNextFire = this.fireRate;
-      ProjectileController.makeProjectile(this.firePoint, { x: 0, y: -1 });
+      ProjectileController.makeProjectile(this.firePoint, this.t,5,{x:0,y:-1});
     }
   }
 }

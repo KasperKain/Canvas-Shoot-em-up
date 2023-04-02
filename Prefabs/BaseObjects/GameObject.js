@@ -4,7 +4,9 @@ import GameObjectManager from "../../Global/GameObjectManager.js";
 import CollisionObject from "./CollisionObject.js";
 
 export default class GameObject {
-  constructor(l, d, x, y, w, h, v = 0, hasCollision = false) {
+  constructor(axis,t,l, d, x, y, w, h, v, hasCollision = false) {
+    this.axis = axis;
+    this.t = t;
     this.l = l;
     this.d = d;
     this.x = x;
@@ -20,11 +22,9 @@ export default class GameObject {
     }
   }
   draw(ctx) {
-    if (this.isHit) {
-    }
-    ctx.strokeStyle = "white";
-    ctx.fillStyle = "black";
-    ctx.strokeRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
+    // ctx.strokeStyle = "white";
+    // ctx.fillStyle = "black";
+    // ctx.strokeRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
   }
   setPosition(pos) {
     this.x = pos.x;

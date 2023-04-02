@@ -2,6 +2,11 @@ export default class GameObjectManager {
   static objectPool = {};
   static allObjs = [];
   static lastCollided = [];
+  static currentScore = 0;
+
+  static setScore(amount) {
+ this.currentScore+= amount;
+  }
   static createObject(type, obj) {
     if (!this.objectPool[type]) {
       this.objectPool[type] = [];
@@ -11,7 +16,6 @@ export default class GameObjectManager {
     return obj;
   }
   static deleteObject(obj) {
-    console.log("deleting");
     Object.values(this.objectPool).forEach((cat, index) => {
       cat.forEach((item) => {
         if (item === obj) {
@@ -26,7 +30,7 @@ export default class GameObjectManager {
     this.allObjs.forEach((obj) => {
       if (obj.hasCollision) {
         this.allObjs.forEach((obj2) => {
-          if (obj2.hasCollision && obj2 != obj) {
+          if (obj2.hasCollision && obj2 != obj && obj2.t !== obj.t && obj.constructor.name != obj2.constructor.name) {
             if (
               obj.collisionBox.x >= obj2.collisionBox.x - obj2.collisionBox.w &&
               obj.collisionBox.x <= obj2.collisionBox.x + obj2.collisionBox.w &&

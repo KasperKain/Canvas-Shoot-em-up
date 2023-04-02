@@ -1,18 +1,18 @@
 import ProjectileController from "../Global/ProjectileController.js";
 import GameObject from "./BaseObjects/GameObject.js";
 
-export default class Enemy extends GameObject {
+export default class Enemy2 extends GameObject {
   constructor(axis,t,l, d, x, y, w, h, v, hasCollision) {
     super(
-      axis = {x:0,y:1},
+      axis = {x: (Math.ceil(Math.random()) * (Math.round(Math.random()) ? 1 : -1) * 0.3),y:1},
       (t = 'enemy'),
-      (l = 3),
+      (l = 1),
       (d = 2),
       (x = 0),
       (y = 0),
       (w = 50),
       (h = 50),
-      (v = 2),
+      (v = Math.random() * 2 + 2.5),
       (hasCollision = true)
     );
     this.fireRate = 14;
@@ -38,7 +38,7 @@ export default class Enemy extends GameObject {
   shoot() {
     if (this.timeUntilNextFire <= 0) {
       this.timeUntilNextFire = this.fireRate;
-      ProjectileController.makeProjectile(this.firePoint, this.t, 3,{x:0,y:2});
+      //ProjectileController.makeProjectile(this.firePoint, this.t, 2,{x:0,y:2});
     }
   }
 }
