@@ -7,6 +7,7 @@ import GameObjectManager from "./Global/GameObjectManager.js";
 import GameConfigs from "./GameConfigs.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+ctx.imageSmoothingEnabled = false;
 
 // CONFIGURATIONS
 const controls = new Controls(document.addEventListener("keydown", () => {}));
@@ -22,7 +23,8 @@ const player = GameObjectManager.createObject(
     50,
     50,
     GameConfigs.playerOptions.velocity,
-    GameConfigs.playerOptions.hasCollision
+    GameConfigs.playerOptions.hasCollision,
+    ['player/Dead.png','player/Special1.png']
   )
 );
 canvas.width = CanvasConfigs.width;
@@ -54,6 +56,12 @@ const updatePlayer = () => {
   }
 };
 
+const updateScore = () => {
+  ctx.fillStyle = 'white'
+  ctx.font = "30px Arial";
+  ctx.fillText(`Score: ${GameObjectManager.currentScore}`, 10, 50);
+}
+
 const gameLoop = () => {
   requestAnimationFrame(gameLoop);
   updatePlayer();
@@ -67,6 +75,8 @@ const gameLoop = () => {
   ProjectileController.drawBullets(ctx);
   ProjectileController.updateBullets();
   ProjectileController.checkOffScreen();
+
+  updateScore();
 
   // Debug section
   if (GameConfigs.debugOptions.collisionVisable) {

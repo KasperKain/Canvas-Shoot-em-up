@@ -12,7 +12,7 @@ export default class StraightLinePattern {
     let enemies = [];
     let enemyGap = 0;
     for (let i = 0; i < this.enemyCount; i++) {
-      let enemy = GameObjectManager.createObject("enemies", new Enemy());
+      let enemy = GameObjectManager.createObject("enemies", new Enemy());;
       enemyGap += this.screenSize.x / this.enemyCount;
       enemy.setPosition({
         x: enemyGap - this.screenSize.x / this.enemyCount / 2,

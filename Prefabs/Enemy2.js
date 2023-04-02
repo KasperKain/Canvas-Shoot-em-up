@@ -18,6 +18,7 @@ export default class Enemy2 extends GameObject {
     this.fireRate = 14;
     this.firePoint = { x: this.x, y: this.y - 10 };
     this.timeUntilNextFire = Math.random() * this.fireRate;
+    this.score = 1;
   }
 
   moveFirePoint() {

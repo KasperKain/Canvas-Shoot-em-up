@@ -1,17 +1,14 @@
 import CanvasConfigs from "../Configs.js";
 import RandomLinePattern from "../Patterns/RandomLinePattern.js";
+import SideEntryLinePattern from "../Patterns/SideEntryLinePattern.js";
 import SideEntryPattern from "../Patterns/SideEntryPattern.js";
 import StraightLinePattern from "../Patterns/StraightLinePattern.js";
-import Enemy from "../Prefabs/Enemy.js";
-import Enemy2 from "../Prefabs/Enemy2.js";
-import Enemy3 from '../Prefabs/Enemy3.js'
 import GameObjectManager from "./GameObjectManager.js";
 
 export default class EnemyController {
   static lastPatternIndex = 0;
   static screenSize = { x: CanvasConfigs.width, y: CanvasConfigs.height };
-  static patterns = [StraightLinePattern,RandomLinePattern,SideEntryPattern];
-  static enemies = [{ type: "default", enemy: Enemy }, {type: 'crash', enemy: Enemy2},{type: 'side', enemy: Enemy3}];
+  static patterns = [StraightLinePattern,RandomLinePattern,SideEntryPattern,SideEntryLinePattern];
   static spawnWave() {
     const newPattern = this.selectRandomPattern();
     newPattern.spawn();

@@ -8,7 +8,7 @@ export default class Enemy3 extends GameObject {
     super(
       axis = {x:0,y:0.7},
       (t = 'enemy'),
-      (l = 3),
+      (l = 2),
       (d = 2),
       (x = 0),
       (y = 0),
@@ -20,6 +20,7 @@ export default class Enemy3 extends GameObject {
     this.fireRate = 14;
     this.firePoint = { x: this.x, y: this.y - 10 };
     this.timeUntilNextFire = Math.random() * this.fireRate;
+    this.score = 1;
   }
 
   moveFirePoint() {
@@ -42,7 +43,6 @@ export default class Enemy3 extends GameObject {
       let player = GameObjectManager.objectPool.player[0];
       let bulletAxis = Math.abs(this.x - player.x) / CanvasConfigs.width
       if (player.x < this.x) bulletAxis = bulletAxis * -1;
-      console.log(bulletAxis)
       this.timeUntilNextFire = this.fireRate;
       ProjectileController.makeProjectile(this.firePoint, this.t, 2,{x: bulletAxis, y: 1});
     }

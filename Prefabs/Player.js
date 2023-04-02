@@ -2,8 +2,8 @@ import ProjectileController from "../Global/ProjectileController.js";
 import GameObject from "./BaseObjects/GameObject.js";
 
 export default class Player extends GameObject {
-  constructor(axis,t,l, d, x, y, w, h, v, hasCollision) {
-    super(axis,t,l, d, x, y, w, h, v, hasCollision);
+  constructor(axis,t,l, d, x, y, w, h, v, hasCollision,sprites) {
+    super(axis,t,l, d, x, y, w, h, v, hasCollision,sprites);
     this.fireRate = 2;
     this.firePoint = { x: this.x, y: this.y};
     this.timeUntilNextFire = 0;
