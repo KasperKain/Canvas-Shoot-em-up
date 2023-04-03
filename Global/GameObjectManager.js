@@ -3,6 +3,22 @@ export default class GameObjectManager {
   static allObjs = [];
   static lastCollided = [];
   static currentScore = 0;
+  static isGameOver = false;
+
+  static gameOver() {
+    console.log(this.objectPool)
+    this.isGameOver = true;
+    if(this.objectPool.enemies) {
+      let enLength = this.objectPool.enemies.length;
+      for(let i = 0; i < enLength; i++) {
+        this.deleteObject(this.objectPool.enemies[0])
+      }
+      this.objectPool.enemies.forEach(enemy => {
+        this.deleteObject(enemy)
+      })
+    }
+    console.log(this.objectPool)
+  }
 
   static setScore(amount) {
  this.currentScore+= amount;
@@ -19,6 +35,7 @@ export default class GameObjectManager {
     Object.values(this.objectPool).forEach((cat, index) => {
       cat.forEach((item) => {
         if (item === obj) {
+          console.log('deleting')
           cat.splice(cat.indexOf(obj), 1);
           this.allObjs.splice(this.allObjs.indexOf(obj), 1);
           return;

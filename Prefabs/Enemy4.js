@@ -8,7 +8,7 @@ export default class Enemy3 extends GameObject {
       axis = {x:0,y:1},
       (t = 'enemy'),
       (l = 3),
-      (d = 2),
+      (d = 20),
       (x = 0),
       (y = 0),
       (w = 50),

@@ -1,3 +1,4 @@
+import GameObjectManager from "../Global/GameObjectManager.js";
 import ProjectileController from "../Global/ProjectileController.js";
 import GameObject from "./BaseObjects/GameObject.js";
 
@@ -8,6 +9,8 @@ export default class Player extends GameObject {
     this.firePoint = { x: this.x, y: this.y};
     this.timeUntilNextFire = 0;
     this.canFire = true;
+    this.maxL = l;
+    this.maxV = v;
   }
 
   checkBoundsX(min, max) {
@@ -46,6 +49,7 @@ export default class Player extends GameObject {
         this.v = 0;
         this.canFire = false;
         console.log('game over')
+        GameObjectManager.gameOver();
       }
     }
   }

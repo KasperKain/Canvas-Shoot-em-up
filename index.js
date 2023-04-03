@@ -5,6 +5,8 @@ import ProjectileController from "./Global/ProjectileController.js";
 import EnemyController from "./Global/EnemyControllers.js";
 import GameObjectManager from "./Global/GameObjectManager.js";
 import GameConfigs from "./GameConfigs.js";
+import GameScene from "./Scenes/GameScene.js";
+import MenuScene from "./Scenes/MenuScene.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
@@ -16,7 +18,7 @@ const player = GameObjectManager.createObject(
   new Player(
     {x:0,y:-1},
     'player',
-    4,
+    3,
     20,
     CanvasConfigs.middleWidth,
     CanvasConfigs.middleHeight,
@@ -24,7 +26,7 @@ const player = GameObjectManager.createObject(
     50,
     GameConfigs.playerOptions.velocity,
     GameConfigs.playerOptions.hasCollision,
-    ['player/Dead.png','player/Special1.png']
+    ['player/0.png']
   )
 );
 canvas.width = CanvasConfigs.width;
@@ -46,53 +48,26 @@ const setCommonStyles = () => {
 // patternManager.initialize();
 // const wave = new Wave(patternManager);
 // wave.spawn();
-const updatePlayer = () => {
-  player.updateFireRate();
-  player.move(controls.axis());
-  player.checkBoundsX(0, CanvasConfigs.width);
-  player.checkBoundsY(CanvasConfigs.height - 250, CanvasConfigs.height);
-  if (controls.key("confirm")) {
-    player.shoot();
-  }
-};
 
-const updateScore = () => {
-  ctx.fillStyle = 'white'
-  ctx.font = "30px Arial";
-  ctx.fillText(`Score: ${GameObjectManager.currentScore}`, 10, 50);
-}
 
+const menuScene = new MenuScene(ctx,controls);
+const gameScene = new GameScene(ctx,controls,player);
+
+let isInGame = false;
 const gameLoop = () => {
   requestAnimationFrame(gameLoop);
-  updatePlayer();
   setCommonStyles();
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, CanvasConfigs.width, CanvasConfigs.height);
-  player.draw(ctx);
-  GameObjectManager.checkCollisions();
-  EnemyController.updateEnemies();
-  EnemyController.drawEnemies(ctx);
-  ProjectileController.drawBullets(ctx);
-  ProjectileController.updateBullets();
-  ProjectileController.checkOffScreen();
 
-  updateScore();
-
-  // Debug section
-  if (GameConfigs.debugOptions.collisionVisable) {
-    player.collisionBox.debugDraw(ctx);
-    EnemyController.debugDrawEnemies(ctx);
-    ProjectileController.debugDrawProjectiles(ctx);
+  if(isInGame) {
+    console.log(isInGame)
+    gameScene.update();
+  } else {
+    isInGame = menuScene.update();
   }
 
-  if (GameConfigs.debugOptions.firePointVisable) {
-    player.drawDebugFirePoint(ctx);
-    EnemyController.debugDrawEnemiesFirePoint(ctx);
-  }
-
-  if (GameConfigs.debugOptions.collisionHitVisable) {
-    GameObjectManager.drawDebugHit(ctx);
-  }
+  // gameScene.update();
 };
 
 gameLoop();

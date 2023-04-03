@@ -7,12 +7,12 @@ export default class Enemy2 extends GameObject {
       axis = {x: (Math.ceil(Math.random()) * (Math.round(Math.random()) ? 1 : -1) * 0.3),y:1},
       (t = 'enemy'),
       (l = 1),
-      (d = 2),
+      (d = 20),
       (x = 0),
       (y = 0),
       (w = 50),
       (h = 50),
-      (v = Math.random() * 2 + 2.5),
+      (v = Math.random() * 2 + 5),
       (hasCollision = true)
     );
     this.fireRate = 14;

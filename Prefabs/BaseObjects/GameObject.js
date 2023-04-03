@@ -32,9 +32,9 @@ export default class GameObject {
     if(this.sprite) {
       this.sprite.animate(ctx,0,this.sprites.length - 1)
     }
-    ctx.strokeStyle = "white";
-    ctx.fillStyle = "black";
-    ctx.strokeRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
+    // ctx.strokeStyle = "white";
+    // ctx.fillStyle = "black";
+    // ctx.strokeRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
   }
   setPosition(pos) {
     this.x = pos.x;
