@@ -20,7 +20,6 @@ this.hasPressedKey = false;
             return timeConversion / 100;
         }
         let alpha = alphaColor();
-        console.log(this.currentFadeTime)
         this.ctx.fillStyle = `rgba(255, 255, 255, ${1 - alpha})`
         this.ctx.fillRect(0, 0, CanvasConfigs.width, CanvasConfigs.height);
     }
@@ -40,6 +39,9 @@ this.hasPressedKey = false;
     drawText() {
         this.ctx.fillStyle = 'white';
 
+        this.ctx.font = '18px serif'
+        this.ctx.fillText('A mini-game by',21,30);
+        this.ctx.fillText('Kasper Kain',30,50)
         if(this.currentBlinkTime > this.blinkTime) {this.currentBlinkTime = 0, this.showingText = !this.showingText}
         else {this.currentBlinkTime ++}
 

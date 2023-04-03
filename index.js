@@ -4,6 +4,7 @@ import CanvasConfigs from "./Configs.js";
 import ProjectileController from "./Global/ProjectileController.js";
 import EnemyController from "./Global/EnemyControllers.js";
 import GameObjectManager from "./Global/GameObjectManager.js";
+import GroundImageManager from "./Global/GroundImageManager.js";
 import GameConfigs from "./GameConfigs.js";
 import GameScene from "./Scenes/GameScene.js";
 import MenuScene from "./Scenes/MenuScene.js";
@@ -13,6 +14,7 @@ ctx.imageSmoothingEnabled = false;
 
 // CONFIGURATIONS
 const controls = new Controls(document.addEventListener("keydown", () => {}));
+GroundImageManager.initialize();
 const player = GameObjectManager.createObject(
   "player",
   new Player(
@@ -34,13 +36,6 @@ canvas.height = CanvasConfigs.height;
 
 EnemyController.spawnWave();
 
-const setCommonStyles = () => {
-  ctx.shadowColor = CanvasConfigs.commonStyle.shadow;
-  ctx.shadowBlur = CanvasConfigs.commonStyle.blur;
-  ctx.lineJoin = CanvasConfigs.commonStyle.lineJoin;
-  ctx.lineWidth = CanvasConfigs.commonStyle.lineWidth;
-};
-
 // const patternManager = new PatternManager({
 //   x: CanvasConfigs.width,
 //   y: CanvasConfigs.height,
@@ -56,12 +51,11 @@ const gameScene = new GameScene(ctx,controls,player);
 let isInGame = false;
 const gameLoop = () => {
   requestAnimationFrame(gameLoop);
-  setCommonStyles();
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, CanvasConfigs.width, CanvasConfigs.height);
 
   if(isInGame) {
-    console.log(isInGame)
+    GroundImageManager.animate(ctx);
     gameScene.update();
   } else {
     isInGame = menuScene.update();

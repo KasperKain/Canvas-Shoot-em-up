@@ -2,8 +2,8 @@ export default class SpriteObject {
     constructor(x,y,sprites) {
         this.x = x;
         this.y = y;
-        this.w = 50;
-        this.h = 50;
+        this.w = 64;
+        this.h = 64;
         this.sprites = sprites;
         this.animRate = 6;
         this.timeUntilNextFrame = 0;
