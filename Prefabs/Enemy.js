@@ -2,10 +2,24 @@ import ProjectileController from "../Global/ProjectileController.js";
 import GameObject from "./BaseObjects/GameObject.js";
 
 export default class Enemy extends GameObject {
-  constructor(axis,t,l, d, x, y, w, h, v, hasCollision,sprites) {
+  constructor(
+    axis,
+    t,
+    l,
+    d,
+    x,
+    y,
+    w,
+    h,
+    v,
+    hasCollision,
+    sprites,
+    spriteSize,
+    collisionOffset
+  ) {
     super(
-      axis = {x:0,y:1},
-      (t = 'enemy'),
+      (axis = { x: 0, y: 1 }),
+      (t = "enemy"),
       (l = 3),
       (d = 20),
       (x = 0),
@@ -14,9 +28,15 @@ export default class Enemy extends GameObject {
       (h = 50),
       (v = 2),
       (hasCollision = true),
-      sprites = ['player/Dead.png', 'player/Special1.png','player/Special2.png']
+      (sprites = [
+        "enemy/enemy1-1.png",
+        "enemy/enemy1-2.png",
+        "enemy/enemy1-3.png",
+      ]),
+      (spriteSize = { x: 128, y: 128 }),
+      (collisionOffset = { x: 0, y: 0 })
     );
-    this.fireRate = 14;
+    this.fireRate = 6;
     this.firePoint = { x: this.x, y: this.y - 10 };
     this.timeUntilNextFire = Math.random() * this.fireRate;
     this.score = 2;
@@ -40,7 +60,10 @@ export default class Enemy extends GameObject {
   shoot() {
     if (this.timeUntilNextFire <= 0) {
       this.timeUntilNextFire = this.fireRate;
-      ProjectileController.makeProjectile(this.firePoint, this.t, 3,{x:0,y:2});
+      ProjectileController.makeProjectile(this.firePoint, this.t, 3, {
+        x: 0,
+        y: 2,
+      });
     }
   }
 }

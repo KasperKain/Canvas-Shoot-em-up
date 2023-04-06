@@ -1,8 +1,8 @@
 export default {
   debugOptions: {
-    collisionVisable: true,
+    collisionVisable: false,
     collisionHitVisable: true,
-    firePointVisable: true,
+    firePointVisable: false,
   },
   playerOptions: {
     width: 20,

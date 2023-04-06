@@ -4,10 +4,24 @@ import ProjectileController from "../Global/ProjectileController.js";
 import GameObject from "./BaseObjects/GameObject.js";
 
 export default class Enemy3 extends GameObject {
-  constructor(axis,t,l, d, x, y, w, h, v, hasCollision) {
+  constructor(
+    axis,
+    t,
+    l,
+    d,
+    x,
+    y,
+    w,
+    h,
+    v,
+    hasCollision,
+    sprites,
+    spriteSize,
+    collisionOffset
+  ) {
     super(
-      axis = {x:0,y:0.7},
-      (t = 'enemy'),
+      (axis = { x: 0, y: 0.7 }),
+      (t = "enemy"),
       (l = 2),
       (d = 20),
       (x = 0),
@@ -15,7 +29,14 @@ export default class Enemy3 extends GameObject {
       (w = 50),
       (h = 50),
       (v = 2),
-      (hasCollision = true)
+      (hasCollision = true),
+      (sprites = [
+        "enemy/enemy3-1.png",
+        "enemy/enemy3-2.png",
+        "enemy/enemy3-3.png",
+      ]),
+      (spriteSize = { x: 100, y: 100 }),
+      (collisionOffset = { x: 12, y: 12 })
     );
     this.fireRate = 14;
     this.firePoint = { x: this.x, y: this.y - 10 };
@@ -41,10 +62,13 @@ export default class Enemy3 extends GameObject {
   shoot() {
     if (this.timeUntilNextFire <= 0) {
       let player = GameObjectManager.objectPool.player[0];
-      let bulletAxis = Math.abs(this.x - player.x) / CanvasConfigs.width
+      let bulletAxis = Math.abs(this.x - player.x) / CanvasConfigs.width;
       if (player.x < this.x) bulletAxis = bulletAxis * -1;
       this.timeUntilNextFire = this.fireRate;
-      ProjectileController.makeProjectile(this.firePoint, this.t, 2,{x: bulletAxis, y: 1});
+      ProjectileController.makeProjectile(this.firePoint, this.t, 2, {
+        x: bulletAxis,
+        y: 1,
+      });
     }
   }
 }
